@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Analytics — VelocityPay</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link href="../static/css/velocitypay.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="app-root">
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">Velocity<em>Pay</em></div>
+  <nav style="padding:12px 0">
+    <a class="nav-link" href="dashboard.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</a>
+    <a class="nav-link" href="wallet.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><circle cx="12" cy="14" r="2"/></svg>Wallet</a>
+    <a class="nav-link" href="send.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Send Money</a>
+    <a class="nav-link" href="transactions.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="12 8 12 12 14 14"/><path d="M3.05 11a9 9 0 1 0 .5-4.5"/><polyline points="3 3 3 11 11 11"/></svg>Transactions</a>
+    <a class="nav-link" href="notifications.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>Notifications</a>
+    <a class="nav-link active" href="analytics.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>Analytics</a>
+    <a class="nav-link" href="profile.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</a>
+  </nav>
+  <div class="sidebar-footer"><div class="sidebar-user"><div class="sidebar-avatar" data-user-avatar></div><div><div class="sidebar-user-name" data-user-name></div></div></div><a href="#" onclick="Api.logout()" style="display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.3);font-size:13px;margin-top:14px;text-decoration:none"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sign out</a></div>
+</aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="main">
+  <header class="topbar">
+    <div style="display:flex;align-items:center;gap:12px"><button class="hamburger" id="hamburger"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button><span class="topbar-title">Analytics</span></div>
+    <div class="topbar-right"><div class="top-avatar" data-user-avatar onclick="location.href='profile.html'"></div></div>
+  </header>
+  <main class="page">
+    <div class="page-header"><div class="page-title">Analytics</div><div class="page-subtitle">Your financial insights at a glance</div></div>
+
+    <!-- Personal stats -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:28px">
+      <div class="stat-card"><div class="stat-icon-wrap" style="background:rgba(139,94,60,.1);color:var(--primary)"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="12 8 12 12 14 14"/><path d="M3.05 11a9 9 0 1 0 .5-4.5"/></svg></div><div class="stat-value" id="sTot">—</div><div class="stat-label">Total Transactions</div></div>
+      <div class="stat-card"><div class="stat-icon-wrap" style="background:rgba(45,106,79,.1);color:var(--success)"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><div class="stat-value" id="sComp">—</div><div class="stat-label">Completed</div></div>
+      <div class="stat-card"><div class="stat-icon-wrap" style="background:rgba(192,57,43,.1);color:var(--danger)"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div><div class="stat-value" id="sFail">—</div><div class="stat-label">Failed</div></div>
+      <div class="stat-card"><div class="stat-icon-wrap" style="background:rgba(183,121,31,.1);color:var(--warning)"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg></div><div class="stat-value" id="sAvg">—</div><div class="stat-label">Avg Transaction</div></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px">
+      <div class="card">
+        <div class="card-header">Monthly Spending</div>
+        <div class="card-body" id="monthlyChart"><div style="text-align:center;padding:32px;color:var(--sub)">Loading…</div></div>
+      </div>
+      <div class="card">
+        <div class="card-header">Daily Volume (7 days)</div>
+        <div class="card-body" id="dailyChart"><div style="text-align:center;padding:32px;color:var(--sub)">Loading…</div></div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:2fr 1fr;gap:24px">
+      <div class="card">
+        <div class="card-header">Platform Overview</div>
+        <div class="card-body">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
+            <div style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--primary)" id="pU">—</div><div style="font-size:12px;color:var(--sub);margin-top:4px">Users</div></div>
+            <div style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--primary)" id="pW">—</div><div style="font-size:12px;color:var(--sub);margin-top:4px">Wallets</div></div>
+            <div style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--primary)" id="pT">—</div><div style="font-size:12px;color:var(--sub);margin-top:4px">Transactions</div></div>
+            <div style="text-align:center"><div style="font-size:24px;font-weight:900;color:var(--success)" id="pV">—</div><div style="font-size:12px;color:var(--sub);margin-top:4px">Total Volume</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">Top Senders</div>
+        <div class="card-body" id="topSenders" style="padding-top:8px"><div style="text-align:center;padding:24px;color:var(--sub)">Loading…</div></div>
+      </div>
+    </div>
+  </main>
+</div>
+</div>
+
+<script src="../static/js/api.js"></script>
+<script src="../static/js/utils.js"></script>
+<script>
+if (!Api.requireAuth()) {}
+
+function bar(label, value, max, color) {
+  const pct = max > 0 ? Math.round((value/max)*100) : 0;
+  return `<div style="margin-bottom:16px">
+    <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+      <span style="font-size:13px;font-weight:500">${label}</span>
+      <span style="font-size:13px;color:var(--sub)">${formatMoneyShort(value)}</span>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${pct}%;background:${color}"></div></div>
+  </div>`;
+}
+
+async function load() {
+  try {
+    const [stats, monthly, daily, platform, top] = await Promise.all([
+      Api.getUserStats(), Api.getMonthly(6), Api.getDaily(7), Api.getPlatformStats(), Api.getTopSenders(5)
+    ]);
+    document.getElementById('sTot').textContent  = stats.total_transactions;
+    document.getElementById('sComp').textContent = stats.completed_count;
+    document.getElementById('sFail').textContent = stats.failed_count;
+    document.getElementById('sAvg').textContent  = formatMoneyShort(stats.average_transaction_amount);
+
+    const months = (monthly.data||[]).reverse();
+    const maxM = Math.max(...months.map(m=>m.amount), 1);
+    const mNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    document.getElementById('monthlyChart').innerHTML = months.length
+      ? months.map(m => bar(`${mNames[m.month-1]} ${m.year}`, m.amount, maxM, 'linear-gradient(90deg,#8B5E3C,#D4A373)')).join('')
+      : '<div style="text-align:center;padding:32px;color:var(--sub)">No data yet</div>';
+
+    const days = (daily.data||[]).reverse();
+    const maxD = Math.max(...days.map(d=>Math.max(d.sent,d.received)), 1);
+    document.getElementById('dailyChart').innerHTML = days.length
+      ? days.map(d => `
+          <div style="margin-bottom:10px"><div style="font-size:11px;font-weight:700;color:var(--sub);margin-bottom:6px">${d.date}</div>
+          ${bar('Sent', d.sent, maxD, '#C0392B')}${bar('Received', d.received, maxD, '#2D6A4F')}</div>`).join('')
+      : '<div style="text-align:center;padding:32px;color:var(--sub)">No data yet</div>';
+
+    document.getElementById('pU').textContent = platform.total_users;
+    document.getElementById('pW').textContent = platform.total_wallets;
+    document.getElementById('pT').textContent = platform.total_transactions;
+    document.getElementById('pV').textContent = formatMoneyShort(platform.total_volume);
+
+    const senders = top.data||[];
+    document.getElementById('topSenders').innerHTML = senders.length
+      ? senders.map((s,i) => `<div class="txn-row" style="padding:10px 0">
+          <div style="width:24px;font-size:13px;font-weight:700;color:var(--sub)">#${i+1}</div>
+          <div style="flex:1"><div style="font-size:13px;font-weight:600">${s.name}</div><div style="font-size:11px;color:var(--sub)">${s.count} txns</div></div>
+          <div style="font-size:13px;font-weight:700;color:var(--danger)">${formatMoneyShort(s.total)}</div>
+        </div>`).join('')
+      : '<div style="text-align:center;padding:24px;color:var(--sub)">No data yet</div>';
+  } catch(e) { showToast(e.message, 'error'); }
+}
+load();
+</script>
+</body>
+</html>
