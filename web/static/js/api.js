@@ -3,7 +3,9 @@
    All HTTP calls to the backend go through this module.
    ───────────────────────────────────────────────────────────────────────── */
 
-const API_BASE = 'http://localhost:8080/api/v1';
+const API_BASE = window.location.hostname === 'localhost'
+  ? 'http://localhost:8080/api/v1'
+  : '/api/v1';
 
 const Api = (() => {
 
@@ -30,6 +32,18 @@ const Api = (() => {
 
     const res = await fetch(`${API_BASE}${path}`, opts);
     const json = await res.json();
+
+    if (res.status === 401) {
+      // Token expired or invalid — clear session and redirect to login
+      clearToken();
+      clearUser();
+      const isAuthPage = window.location.pathname.includes('login') ||
+                         window.location.pathname.includes('register');
+      if (!isAuthPage) {
+        window.location.href = '/web/pages/login.html?session=expired';
+      }
+      throw new Error('Session expired. Please sign in again.');
+    }
 
     if (!res.ok) {
       const msg = json?.error?.message || 'Something went wrong';

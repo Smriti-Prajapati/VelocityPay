@@ -72,6 +72,13 @@
 <script>
 if (Api.getToken()) window.location.href = 'dashboard.html';
 
+// Show session expired message if redirected from expired token
+if (new URLSearchParams(window.location.search).get('session') === 'expired') {
+  const err = document.getElementById('errMsg');
+  err.textContent = 'Your session expired. Please sign in again.';
+  err.classList.add('show');
+}
+
 document.getElementById('loginForm').addEventListener('submit', async e => {
   e.preventDefault();
   const btn = document.getElementById('submitBtn');

@@ -81,7 +81,7 @@ services:
       REDIS_DB: "0"
       RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672/
       JWT_SECRET: dev-secret-velocitypay-change-in-production
-      JWT_ACCESS_TTL: 15m
+      JWT_ACCESS_TTL: 24h
       JWT_REFRESH_TTL: 168h
     depends_on:
       postgres:
