@@ -11,6 +11,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/velocitypay/velocitypay/internal/analytics"
+	"github.com/velocitypay/velocitypay/internal/audit"
 	"github.com/velocitypay/velocitypay/internal/auth"
 	"github.com/velocitypay/velocitypay/internal/config"
 	"github.com/velocitypay/velocitypay/internal/database"
@@ -49,7 +51,6 @@ func main() {
 	if err != nil {
 		log.Fatal("postgres connection failed", zap.Error(err))
 	}
-
 	if err := database.RunMigrations(db, "file://migrations", log); err != nil {
 		log.Fatal("migrations failed", zap.Error(err))
 	}
@@ -87,6 +88,8 @@ func main() {
 	refundRepo       := refund.NewRepository(db)
 	notificationRepo := notification.NewRepository(db)
 	fraudRepo        := fraud.NewRepository(db)
+	analyticsRepo    := analytics.NewRepository(db)
+	auditRepo        := audit.NewRepository(db)
 
 	// ── Services ──────────────────────────────────────────────────────────────
 	userSvc         := users.NewService(userRepo, tokenManager, redisClient, publisher, log)
@@ -96,6 +99,8 @@ func main() {
 	txnSvc          := transaction.NewService(txnRepo, walletRepo, userRepo, fraudSvc, publisher, redisClient, m, log)
 	refundSvc       := refund.NewService(refundRepo, txnRepo, walletRepo, publisher, log)
 	notificationSvc := notification.NewService(notificationRepo, log)
+	analyticsSvc    := analytics.NewService(analyticsRepo, walletRepo, redisClient, log)
+	auditSvc        := audit.NewService(auditRepo, log)
 
 	// ── Background Workers ────────────────────────────────────────────────────
 	workerCtx, cancelWorkers := context.WithCancel(context.Background())
@@ -103,7 +108,18 @@ func main() {
 	// Transaction worker pool
 	txnSvc.StartWorkers(workerCtx)
 
-	// Notification consumer — runs in its own goroutine
+	// Audit consumer
+	auditConsumer, err := audit.NewConsumer(mqConn, auditSvc, log)
+	if err != nil {
+		log.Fatal("audit consumer init failed", zap.Error(err))
+	}
+	go func() {
+		if err := auditConsumer.Start(workerCtx); err != nil {
+			log.Error("audit consumer stopped", zap.Error(err))
+		}
+	}()
+
+	// Notification consumer
 	notifConsumer, err := notification.NewConsumer(mqConn, notificationSvc, log)
 	if err != nil {
 		log.Fatal("notification consumer init failed", zap.Error(err))
@@ -114,6 +130,17 @@ func main() {
 		}
 	}()
 
+	// Analytics consumer
+	analyticsConsumer, err := analytics.NewConsumer(mqConn, analyticsSvc, log)
+	if err != nil {
+		log.Fatal("analytics consumer init failed", zap.Error(err))
+	}
+	go func() {
+		if err := analyticsConsumer.Start(workerCtx); err != nil {
+			log.Error("analytics consumer stopped", zap.Error(err))
+		}
+	}()
+
 	// ── HTTP Handlers ─────────────────────────────────────────────────────────
 	userHandler         := users.NewHandler(userSvc, log)
 	walletHandler       := wallet.NewHandler(walletSvc, log)
@@ -121,6 +148,8 @@ func main() {
 	refundHandler       := refund.NewHandler(refundSvc, log)
 	notificationHandler := notification.NewHandler(notificationSvc, log)
 	fraudHandler        := fraud.NewHandler(fraudSvc, log)
+	analyticsHandler    := analytics.NewHandler(analyticsSvc, log)
+	auditHandler        := audit.NewHandler(auditSvc, log)
 
 	// ── Router ────────────────────────────────────────────────────────────────
 	if cfg.App.Env == "production" {
@@ -144,6 +173,12 @@ func main() {
 	})
 	router.GET("/metrics", gin.WrapH(promhttp.Handler()))
 
+	// Serve frontend static files
+	router.Static("/web", "./web")
+	router.GET("/", func(c *gin.Context) {
+		c.Redirect(http.StatusFound, "/web/index.html")
+	})
+
 	// API v1
 	v1 := router.Group("/api/v1")
 	userHandler.RegisterRoutes(v1, authMiddleware)
@@ -152,6 +187,8 @@ func main() {
 	refundHandler.RegisterRoutes(v1, authMiddleware)
 	notificationHandler.RegisterRoutes(v1, authMiddleware)
 	fraudHandler.RegisterRoutes(v1, authMiddleware)
+	analyticsHandler.RegisterRoutes(v1, authMiddleware)
+	auditHandler.RegisterRoutes(v1, authMiddleware)
 
 	// ── HTTP Server ───────────────────────────────────────────────────────────
 	srv := &http.Server{
