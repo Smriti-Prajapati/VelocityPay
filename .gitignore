@@ -1,0 +1,25 @@
+# Environment
+.env
+*.env
+.env.local
+
+# Binary
+velocitypay
+*.exe
+
+# Go
+vendor/
+*.test
+*.out
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
