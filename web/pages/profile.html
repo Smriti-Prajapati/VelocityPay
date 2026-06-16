@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile — VelocityPay</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link href="../static/css/velocitypay.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="app-root">
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">Velocity<em>Pay</em></div>
+  <nav style="padding:12px 0">
+    <a class="nav-link" href="dashboard.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</a>
+    <a class="nav-link" href="wallet.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><circle cx="12" cy="14" r="2"/></svg>Wallet</a>
+    <a class="nav-link" href="send.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Send Money</a>
+    <a class="nav-link" href="transactions.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="12 8 12 12 14 14"/><path d="M3.05 11a9 9 0 1 0 .5-4.5"/></svg>Transactions</a>
+    <a class="nav-link" href="notifications.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>Notifications</a>
+    <a class="nav-link" href="analytics.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>Analytics</a>
+    <a class="nav-link active" href="profile.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</a>
+  </nav>
+  <div class="sidebar-footer"><div class="sidebar-user"><div class="sidebar-avatar" data-user-avatar></div><div><div class="sidebar-user-name" data-user-name></div><div class="sidebar-user-email" data-user-email></div></div></div><a href="#" onclick="Api.logout()" style="display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.3);font-size:13px;margin-top:14px;text-decoration:none"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sign out</a></div>
+</aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="main">
+  <header class="topbar">
+    <div style="display:flex;align-items:center;gap:12px"><button class="hamburger" id="hamburger"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button><span class="topbar-title">Profile</span></div>
+    <div class="topbar-right"><div class="top-avatar" data-user-avatar></div></div>
+  </header>
+  <main class="page">
+    <div style="display:grid;grid-template-columns:300px 1fr;gap:28px">
+
+      <!-- Profile card -->
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <div class="card" style="text-align:center;padding:32px 24px">
+          <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:28px;font-weight:900;color:#fff" id="pAvatar"></div>
+          <div style="font-size:19px;font-weight:800;color:var(--text)" id="pName">—</div>
+          <div style="font-size:14px;color:var(--sub);margin-top:4px" id="pEmail">—</div>
+          <div style="margin:18px 0;border-top:1px solid var(--border)"></div>
+          <div style="display:flex;flex-direction:column;gap:10px;text-align:left">
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.61 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span id="pPhone">—</span></div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span id="pJoined">—</span></div>
+          </div>
+          <div style="margin:18px 0;border-top:1px solid var(--border)"></div>
+          <span class="badge badge-completed">Account Active</span>
+        </div>
+      </div>
+
+      <!-- Forms + activity -->
+      <div style="display:flex;flex-direction:column;gap:24px">
+
+        <!-- Edit profile -->
+        <div class="card">
+          <div class="card-header">Edit Profile</div>
+          <div class="card-body">
+            <form id="editForm">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+                <div class="form-group" style="margin-bottom:0"><label class="form-label">Full Name</label><input type="text" id="eName" placeholder="Full name"/></div>
+                <div class="form-group" style="margin-bottom:0"><label class="form-label">Phone Number</label><input type="tel" id="ePhone" placeholder="+919876543210"/></div>
+              </div>
+              <div class="form-group" style="margin-top:16px"><label class="form-label">Profile Image URL <span style="color:var(--sub);font-weight:400">(optional)</span></label><input type="url" id="eImg" placeholder="https://…"/></div>
+              <div class="form-error" id="editErr"></div>
+              <button type="submit" class="btn-primary" id="editBtn" style="margin-top:4px">Save Changes</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Change password -->
+        <div class="card">
+          <div class="card-header">Change Password</div>
+          <div class="card-body">
+            <form id="pwdForm">
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
+                <div class="form-group" style="margin-bottom:0"><label class="form-label">Current Password</label><input type="password" id="curPwd" placeholder="Current"/></div>
+                <div class="form-group" style="margin-bottom:0"><label class="form-label">New Password</label><input type="password" id="newPwd" placeholder="Min. 8 chars"/></div>
+                <div class="form-group" style="margin-bottom:0"><label class="form-label">Confirm</label><input type="password" id="confPwd" placeholder="Repeat"/></div>
+              </div>
+              <div class="form-error" id="pwdErr" style="margin-top:12px"></div>
+              <button type="submit" class="btn-primary" id="pwdBtn" style="margin-top:16px">Update Password</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Audit activity -->
+        <div class="card">
+          <div class="card-header">Recent Account Activity</div>
+          <div style="overflow-x:auto">
+            <table class="data-table">
+              <thead><tr><th>Action</th><th>Entity</th><th>IP Address</th><th>When</th></tr></thead>
+              <tbody id="auditBody"><tr><td colspan="4" style="text-align:center;padding:32px;color:var(--sub)">Loading…</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+</div>
+</div>
+
+<script src="../static/js/api.js"></script>
+<script src="../static/js/utils.js"></script>
+<script>
+if (!Api.requireAuth()) {}
+const user = Api.getUser();
+
+async function loadProfile() {
+  try {
+    const p = await Api.getProfile();
+    document.getElementById('pAvatar').textContent = getInitials(p.name);
+    document.getElementById('pName').textContent   = p.name;
+    document.getElementById('pEmail').textContent  = p.email;
+    document.getElementById('pPhone').textContent  = p.phone_number || '—';
+    document.getElementById('pJoined').textContent = 'Joined ' + formatDate(p.created_at);
+    document.getElementById('eName').value  = p.name;
+    document.getElementById('ePhone').value = p.phone_number || '';
+    document.getElementById('eImg').value   = p.profile_image_url || '';
+  } catch(e) { showToast(e.message, 'error'); }
+}
+
+async function loadAudit() {
+  try {
+    const d = await Api.getMyAuditLogs(1);
+    const logs = d.logs || [];
+    const tbody = document.getElementById('auditBody');
+    tbody.innerHTML = logs.length
+      ? logs.slice(0,8).map(l => `<tr>
+          <td style="font-size:13px;font-weight:600">${l.action}</td>
+          <td style="font-size:12px;color:var(--sub)">${l.entity_type||'—'}</td>
+          <td style="font-size:12px;color:var(--sub)">${l.ip_address||'—'}</td>
+          <td style="font-size:12px;color:var(--sub)">${timeAgo(l.created_at)}</td>
+        </tr>`).join('')
+      : '<tr><td colspan="4" style="text-align:center;padding:32px;color:var(--sub)">No activity yet</td></tr>';
+  } catch {}
+}
+
+document.getElementById('editForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = document.getElementById('editBtn');
+  const err = document.getElementById('editErr');
+  err.classList.remove('show');
+  const payload = {};
+  const name = document.getElementById('eName').value.trim();
+  const phone = document.getElementById('ePhone').value.trim();
+  const img = document.getElementById('eImg').value.trim();
+  if (name) payload.name = name;
+  if (phone) payload.phone_number = phone;
+  if (img) payload.profile_image_url = img;
+  showLoader(btn);
+  try {
+    const u = await Api.updateProfile(payload);
+    Api.setUser({ ...user, ...u });
+    document.getElementById('pName').textContent = u.name;
+    document.getElementById('pAvatar').textContent = getInitials(u.name);
+    document.querySelectorAll('[data-user-avatar]').forEach(el => el.textContent = getInitials(u.name));
+    document.querySelectorAll('[data-user-name]').forEach(el => el.textContent = u.name);
+    showToast('Profile updated!', 'success');
+  } catch(e) { err.textContent = e.message; err.classList.add('show'); } finally { hideLoader(btn); }
+});
+
+document.getElementById('pwdForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = document.getElementById('pwdBtn');
+  const err = document.getElementById('pwdErr');
+  err.classList.remove('show');
+  const cur = document.getElementById('curPwd').value;
+  const nxt = document.getElementById('newPwd').value;
+  const cnf = document.getElementById('confPwd').value;
+  if (nxt !== cnf) { err.textContent='Passwords do not match.'; err.classList.add('show'); return; }
+  if (nxt.length < 8) { err.textContent='Password must be at least 8 characters.'; err.classList.add('show'); return; }
+  showLoader(btn);
+  try {
+    await Api.changePassword({ current_password: cur, new_password: nxt });
+    document.getElementById('pwdForm').reset();
+    showToast('Password updated!', 'success');
+  } catch(e) { err.textContent = e.message; err.classList.add('show'); } finally { hideLoader(btn); }
+});
+
+loadProfile();
+loadAudit();
+</script>
+</body>
+</html>

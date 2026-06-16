@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Account — VelocityPay</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link href="../static/css/velocitypay.css" rel="stylesheet"/>
+</head>
+<body style="background:var(--bg)">
+<div class="auth-root">
+  <div class="auth-visual">
+    <div class="auth-visual-inner">
+      <div class="auth-brand">Velocity<span>Pay</span></div>
+      <div class="auth-tagline">Start managing<br/>money smarter.</div>
+      <p class="auth-sub">Create your free VelocityPay account in 30 seconds and get a digital wallet instantly.</p>
+      <div class="auth-feature"><div class="auth-feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div><span class="auth-feature-text">Free account, no hidden fees</span></div>
+      <div class="auth-feature"><div class="auth-feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></div><span class="auth-feature-text">Instant digital wallet on sign-up</span></div>
+      <div class="auth-feature"><div class="auth-feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/></svg></div><span class="auth-feature-text">Real-time notifications on all activity</span></div>
+    </div>
+  </div>
+
+  <div class="auth-panel">
+    <div class="auth-form-box" style="max-width:460px">
+      <div class="auth-form-logo">Velocity<span>Pay</span></div>
+      <div class="auth-title">Create your account</div>
+      <p class="auth-desc">Join thousands of users managing money with VelocityPay.</p>
+
+      <form id="registerForm" novalidate>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div class="form-group" style="margin-bottom:0">
+            <label class="form-label">Full Name</label>
+            <input type="text" id="name" placeholder="Your full name" required/>
+          </div>
+          <div class="form-group" style="margin-bottom:0">
+            <label class="form-label">Phone Number</label>
+            <input type="tel" id="phone" placeholder="+919876543210" required/>
+          </div>
+        </div>
+        <div class="form-group" style="margin-top:16px">
+          <label class="form-label">Email address</label>
+          <div class="input-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <input type="email" id="email" placeholder="you@example.com" autocomplete="email" required/>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div class="form-group" style="margin-bottom:0">
+            <label class="form-label">Password</label>
+            <input type="password" id="password" placeholder="Min. 8 characters" required/>
+          </div>
+          <div class="form-group" style="margin-bottom:0">
+            <label class="form-label">Confirm Password</label>
+            <input type="password" id="confirmPwd" placeholder="Repeat password" required/>
+          </div>
+        </div>
+        <div class="form-error" id="errMsg" style="margin-top:16px"></div>
+        <button type="submit" class="btn-primary btn-full" id="submitBtn" style="margin-top:20px">Create account</button>
+      </form>
+
+      <p style="text-align:center;margin-top:24px;font-size:14px;color:var(--sub)">
+        Already have an account? <a href="login.html" style="font-weight:700;color:var(--primary)">Sign in</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<script src="../static/js/api.js"></script>
+<script src="../static/js/utils.js"></script>
+<script>
+if (Api.getToken()) window.location.href = 'dashboard.html';
+
+document.getElementById('registerForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  const err = document.getElementById('errMsg');
+  err.classList.remove('show');
+
+  const name    = document.getElementById('name').value.trim();
+  const phone   = document.getElementById('phone').value.trim();
+  const email   = document.getElementById('email').value.trim();
+  const pwd     = document.getElementById('password').value;
+  const confirm = document.getElementById('confirmPwd').value;
+
+  if (!name||!phone||!email||!pwd) { err.textContent='All fields are required.'; err.classList.add('show'); return; }
+  if (pwd.length < 8) { err.textContent='Password must be at least 8 characters.'; err.classList.add('show'); return; }
+  if (pwd !== confirm) { err.textContent='Passwords do not match.'; err.classList.add('show'); return; }
+
+  showLoader(btn);
+  try {
+    await Api.register({ name, phone_number: phone, email, password: pwd });
+    showToast('Account created! Redirecting…', 'success');
+    setTimeout(() => window.location.href = 'dashboard.html', 1000);
+  } catch(e) {
+    err.textContent = e.message;
+    err.classList.add('show');
+  } finally { hideLoader(btn); }
+});
+</script>
+</body>
+</html>
