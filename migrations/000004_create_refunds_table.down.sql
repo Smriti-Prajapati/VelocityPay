@@ -1,0 +1,2 @@
+DROP TABLE IF EXISTS refunds;
+DROP TYPE IF EXISTS refund_status;
