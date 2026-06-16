@@ -22,6 +22,7 @@ WORKDIR /app
 
 COPY --from=builder /app/velocitypay .
 COPY --from=builder /app/migrations ./migrations
+COPY --from=builder /app/web ./web
 
 EXPOSE 8080
 
