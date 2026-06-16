@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Transactions — VelocityPay</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link href="../static/css/velocitypay.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="app-root">
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">Velocity<em>Pay</em></div>
+  <nav style="padding:12px 0">
+    <a class="nav-link" href="dashboard.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</a>
+    <a class="nav-link" href="wallet.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><circle cx="12" cy="14" r="2"/></svg>Wallet</a>
+    <a class="nav-link" href="send.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Send Money</a>
+    <a class="nav-link active" href="transactions.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="12 8 12 12 14 14"/><path d="M3.05 11a9 9 0 1 0 .5-4.5"/><polyline points="3 3 3 11 11 11"/></svg>Transactions</a>
+    <a class="nav-link" href="notifications.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>Notifications</a>
+    <a class="nav-link" href="analytics.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>Analytics</a>
+    <a class="nav-link" href="profile.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</a>
+  </nav>
+  <div class="sidebar-footer"><div class="sidebar-user"><div class="sidebar-avatar" data-user-avatar></div><div><div class="sidebar-user-name" data-user-name></div></div></div><a href="#" onclick="Api.logout()" style="display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.3);font-size:13px;margin-top:14px;text-decoration:none"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sign out</a></div>
+</aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<div class="main">
+  <header class="topbar">
+    <div style="display:flex;align-items:center;gap:12px"><button class="hamburger" id="hamburger"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button><span class="topbar-title">Transactions</span></div>
+    <div class="topbar-right"><div class="top-avatar" data-user-avatar onclick="location.href='profile.html'"></div></div>
+  </header>
+  <main class="page">
+    <!-- Filters -->
+    <div class="card" style="margin-bottom:20px">
+      <div class="card-body" style="padding-top:18px;padding-bottom:18px">
+        <div style="display:flex;gap:14px;align-items:flex-end;flex-wrap:wrap">
+          <div style="flex:1;min-width:140px">
+            <label class="form-label">Status</label>
+            <select id="fStatus">
+              <option value="">All statuses</option>
+              <option value="completed">Completed</option>
+              <option value="pending">Pending</option>
+              <option value="failed">Failed</option>
+              <option value="reversed">Reversed</option>
+            </select>
+          </div>
+          <div style="flex:1;min-width:140px">
+            <label class="form-label">Type</label>
+            <select id="fType">
+              <option value="">All types</option>
+              <option value="transfer">Transfer</option>
+              <option value="deposit">Deposit</option>
+              <option value="refund">Refund</option>
+            </select>
+          </div>
+          <button class="btn-primary btn-sm" style="height:44px" onclick="loadTxns(1)">Apply Filters</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">Transaction History <span id="txnCount" style="font-size:13px;font-weight:400;color:var(--sub)"></span></div>
+      <div style="overflow-x:auto">
+        <table class="data-table">
+          <thead><tr><th>Direction</th><th>Amount</th><th>Status</th><th>Notes</th><th>Date</th><th></th></tr></thead>
+          <tbody id="txnBody"><tr><td colspan="6" style="text-align:center;padding:40px;color:var(--sub)">Loading…</td></tr></tbody>
+        </table>
+      </div>
+      <div id="pagination" class="card-footer"></div>
+    </div>
+  </main>
+</div>
+
+<!-- Refund modal -->
+<div class="modal-overlay" id="refundModal">
+  <div class="modal-box">
+    <div class="modal-title">Request a Refund</div>
+    <p class="modal-desc">Describe the reason for your refund request (min. 10 characters).</p>
+    <input type="hidden" id="rTxnId"/>
+    <div class="form-group"><label class="form-label">Refund Amount</label><input type="number" id="rAmount" placeholder="Amount"/></div>
+    <div class="form-group"><label class="form-label">Reason</label><textarea id="rReason" rows="3" placeholder="Why are you requesting this refund?"></textarea></div>
+    <div class="form-error" id="rErr"></div>
+    <div style="display:flex;gap:12px;margin-top:4px">
+      <button class="btn-ghost" style="flex:1" onclick="document.getElementById('refundModal').classList.remove('open')">Cancel</button>
+      <button class="btn-primary" style="flex:1" id="rSubmitBtn" onclick="submitRefund()">Submit Refund</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<script src="../static/js/api.js"></script>
+<script src="../static/js/utils.js"></script>
+<script>
+if (!Api.requireAuth()) {}
+const user = Api.getUser();
+let curPage = 1;
+
+async function loadTxns(page=1) {
+  curPage = page;
+  const st = document.getElementById('fStatus').value;
+  const ty = document.getElementById('fType').value;
+  const params = { page, page_size: 12 };
+  if (st) params.status = st;
+  if (ty) params.type = ty;
+  const tbody = document.getElementById('txnBody');
+  tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--sub)">Loading…</td></tr>';
+  try {
+    const d = await Api.getHistory(params);
+    const txns = d.transactions || [];
+    document.getElementById('txnCount').textContent = `${d.total||0} transactions`;
+    if (!txns.length) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--sub)">No transactions found</td></tr>'; return; }
+    tbody.innerHTML = txns.map(t => {
+      const sent = t.sender_id === user?.id;
+      const canRefund = sent && t.status === 'completed';
+      return `<tr>
+        <td><div style="display:flex;align-items:center;gap:10px">
+          <div class="txn-icon-wrap ${sent?'sent':'received'}" style="width:34px;height:34px">
+            ${sent?'<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>':'<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="17" y1="7" x2="7" y2="17"/><polyline points="17 17 7 17 7 7"/></svg>'}
+          </div>
+          <span style="font-weight:600;font-size:14px">${sent?'Sent':'Received'}</span>
+        </div></td>
+        <td><span style="font-weight:700;color:${sent?'var(--danger)':'var(--success)'}">${sent?'-':'+'}${formatMoney(t.amount)}</span></td>
+        <td>${statusBadge(t.status)}</td>
+        <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--sub);font-size:13px">${t.notes||'—'}</td>
+        <td style="font-size:13px;color:var(--sub)">${formatDate(t.created_at)}</td>
+        <td>${canRefund?`<button onclick="openRefund('${t.id}',${t.amount})" style="background:transparent;border:1.5px solid var(--border);border-radius:8px;padding:5px 12px;font-size:12px;font-weight:600;cursor:pointer;color:var(--primary);white-space:nowrap">Refund</button>`:''}</td>
+      </tr>`;
+    }).join('');
+    renderPagination('pagination', page, d.total_pages||1, 'loadTxns');
+  } catch(e) { tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--danger)">${e.message}</td></tr>`; }
+}
+
+function openRefund(id, amt) {
+  document.getElementById('rTxnId').value = id;
+  document.getElementById('rAmount').value = amt;
+  document.getElementById('rReason').value = '';
+  document.getElementById('rErr').classList.remove('show');
+  document.getElementById('refundModal').classList.add('open');
+}
+
+async function submitRefund() {
+  const btn = document.getElementById('rSubmitBtn');
+  const err = document.getElementById('rErr');
+  err.classList.remove('show');
+  const reason = document.getElementById('rReason').value.trim();
+  const amount = parseFloat(document.getElementById('rAmount').value);
+  const txnId  = document.getElementById('rTxnId').value;
+  if (reason.length < 10) { err.textContent='Reason must be at least 10 characters.'; err.classList.add('show'); return; }
+  showLoader(btn);
+  try {
+    await Api.requestRefund({ transaction_id: txnId, amount, reason });
+    document.getElementById('refundModal').classList.remove('open');
+    showToast('Refund request submitted!', 'success');
+    loadTxns(curPage);
+  } catch(e) { err.textContent=e.message; err.classList.add('show'); } finally { hideLoader(btn); }
+}
+
+loadTxns(1);
+</script>
+</body>
+</html>
