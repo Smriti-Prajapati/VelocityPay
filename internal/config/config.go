@@ -41,6 +41,7 @@ type RedisConfig struct {
 	Addr     string
 	Password string
 	DB       int
+	TLS      bool
 }
 
 type RabbitMQConfig struct {
@@ -81,6 +82,7 @@ func Load() (*Config, error) {
 			Addr:     getEnv("REDIS_ADDR", "localhost:6379"),
 			Password: getEnv("REDIS_PASSWORD", ""),
 			DB:       getEnvInt("REDIS_DB", 0),
+			TLS:      getEnv("REDIS_TLS", "false") == "true",
 		},
 		RabbitMQ: RabbitMQConfig{
 			URL: getEnv("RABBITMQ_URL", "amqp://guest:guest@localhost:5672/"),
