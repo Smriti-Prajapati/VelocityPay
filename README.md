@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # VelocityPay
 
 A digital wallet platform I built to practice real backend engineering — not just hello world APIs, but actual fintech concepts like atomic transactions, fraud detection, and event-driven architecture.
@@ -173,9 +172,5 @@ docker/             → Prometheus + Grafana config
 ```
 
 ---
+Developed by **Smriti Prajapati**  
 
-Made by **Smriti Prajapati**  
-GitHub: [@Smriti-Prajapati](https://github.com/Smriti-Prajapati)
-=======
- 
->>>>>>> ef26f37daeeed763008ae318b07499d289a432f0
