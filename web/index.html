@@ -136,12 +136,12 @@
   <div class="hero-card-wrap">
     <div class="hero-card">
       <div class="hc-label">AVAILABLE BALANCE</div>
-      <div class="hc-amount">₹84,250</div>
+      <div class="hc-amount">Your Balance</div>
       <div class="hc-cur">INR · VelocityPay Wallet</div>
-      <div class="hc-num">VPY 4829 3810 2</div>
+      <div class="hc-num">VPY — — — — —</div>
       <div class="hc-row">
-        <div class="hc-txn"><div class="hc-txn-name">Received from Rahul</div><div style="font-size:11px;opacity:.45">2 min ago</div></div>
-        <div class="hc-txn-amt up">+₹2,000</div>
+        <div class="hc-txn"><div class="hc-txn-name">Last transaction</div><div style="font-size:11px;opacity:.45">Just now</div></div>
+        <div class="hc-txn-amt up">Secure ✓</div>
       </div>
     </div>
   </div>
@@ -297,22 +297,22 @@
           <div style="font-size:11px;font-weight:700;color:#9C876A;letter-spacing:.5px;margin-bottom:10px">RECENT ACTIVITY</div>
           <div class="mock-row">
             <div class="mock-dot" style="background:rgba(192,57,43,.1);color:#C0392B">↑</div>
-            <div class="mock-row-name">Sent to Priya</div>
-            <div class="mock-row-amt" style="color:#C0392B">−₹500</div>
+            <div class="mock-row-name">Money sent</div>
+            <div class="mock-row-amt" style="color:#C0392B">Instant</div>
           </div>
           <div class="mock-row">
             <div class="mock-dot" style="background:rgba(45,106,79,.1);color:#2D6A4F">↓</div>
-            <div class="mock-row-name">From Rahul</div>
-            <div class="mock-row-amt" style="color:#2D6A4F">+₹2,000</div>
+            <div class="mock-row-name">Money received</div>
+            <div class="mock-row-amt" style="color:#2D6A4F">Verified</div>
           </div>
           <div class="mock-row">
             <div class="mock-dot" style="background:rgba(139,94,60,.1);color:#8B5E3C">+</div>
             <div class="mock-row-name">Wallet top-up</div>
-            <div class="mock-row-amt" style="color:#8B5E3C">+₹10,000</div>
+            <div class="mock-row-amt" style="color:#8B5E3C">Secure</div>
           </div>
           <div style="margin-top:16px;background:linear-gradient(135deg,#5C3A1E,#8B5E3C);border-radius:12px;padding:14px;color:#fff">
-            <div style="font-size:11px;opacity:.5;margin-bottom:4px">BALANCE</div>
-            <div style="font-size:24px;font-weight:900;letter-spacing:-1px">₹84,250</div>
+            <div style="font-size:11px;opacity:.5;margin-bottom:4px">YOUR BALANCE</div>
+            <div style="font-size:18px;font-weight:700;letter-spacing:-0.5px">Always in sync</div>
           </div>
         </div>
       </div>
@@ -337,12 +337,12 @@
   <div class="split-vis" style="background:var(--brown)">
     <div class="wallet-card-ui">
       <div class="wc-label">VELOCITYPAY WALLET</div>
-      <div class="wc-amount">₹84,250</div>
-      <div class="wc-sub">INR · VPY 4829 3810 2</div>
+      <div class="wc-amount">Your Balance</div>
+      <div class="wc-sub">INR · Unique wallet number</div>
       <div style="background:linear-gradient(90deg,rgba(255,255,255,.3),transparent);height:1px;margin:12px 0 16px"></div>
       <div class="wc-stat">
-        <div class="wc-stat-item"><label>TOTAL SENT</label><span style="color:#FCA5A5">₹12,500</span></div>
-        <div class="wc-stat-item"><label>RECEIVED</label><span style="color:#6EE7B7">₹38,000</span></div>
+        <div class="wc-stat-item"><label>TOTAL SENT</label><span style="color:#FCA5A5">Real-time</span></div>
+        <div class="wc-stat-item"><label>RECEIVED</label><span style="color:#6EE7B7">Real-time</span></div>
         <div class="wc-stat-item"><label>STATUS</label><span>Active</span></div>
       </div>
     </div>
@@ -409,10 +409,10 @@
 <section class="stats-band" id="trust">
   <div class="container">
     <div class="stats-grid">
-      <div><div class="stat-num" id="s1">0</div><div class="stat-lbl">Accounts created</div></div>
-      <div><div class="stat-num" id="s2">0</div><div class="stat-lbl">Transfers processed</div></div>
+      <div><div class="stat-num" id="s1">—</div><div class="stat-lbl">Accounts created</div></div>
+      <div><div class="stat-num" id="s2">—</div><div class="stat-lbl">Transfers processed</div></div>
       <div><div class="stat-num">99.9%</div><div class="stat-lbl">Uptime guarantee</div></div>
-      <div><div class="stat-num" id="s3">0</div><div class="stat-lbl">Fraud events stopped</div></div>
+      <div><div class="stat-num" id="s3">—</div><div class="stat-lbl">Fraud events stopped</div></div>
     </div>
   </div>
 </section>
@@ -457,26 +457,24 @@
 
 <script src="static/js/api.js"></script>
 <script>
-function counter(id, target, suffix='') {
-  const el = document.getElementById(id); if (!el) return;
-  const dur = 2000, start = Date.now();
-  const tick = () => {
-    const p = Math.min((Date.now()-start)/dur,1), e = 1-Math.pow(1-p,3);
-    el.textContent = Math.floor(e*target).toLocaleString('en-IN') + suffix;
-    if (p<1) requestAnimationFrame(tick);
-  };
-  requestAnimationFrame(tick);
+// Load real platform stats from the API
+async function loadStats() {
+  try {
+    // Need a token to hit analytics — skip if not logged in, show dashes
+    if (!Api.getToken()) return;
+    const stats = await fetch('/api/v1/analytics/platform', {
+      headers: { 'Authorization': 'Bearer ' + Api.getToken() }
+    }).then(r => r.json());
+    if (stats.success && stats.data) {
+      const d = stats.data;
+      const s1 = document.getElementById('s1');
+      const s2 = document.getElementById('s2');
+      if (s1) s1.textContent = d.total_users?.toLocaleString('en-IN') || '—';
+      if (s2) s2.textContent = d.total_transactions?.toLocaleString('en-IN') || '—';
+    }
+  } catch { /* fail silently on landing page */ }
 }
-const io = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (!e.isIntersecting) return;
-    if (e.target.id==='s1') counter('s1',1200,'+');
-    if (e.target.id==='s2') counter('s2',8400,'+');
-    if (e.target.id==='s3') counter('s3',340,'+');
-    io.unobserve(e.target);
-  });
-},{threshold:.5});
-['s1','s2','s3'].forEach(id => { const el=document.getElementById(id); if(el) io.observe(el); });
+loadStats();
 </script>
 </body>
 </html>
