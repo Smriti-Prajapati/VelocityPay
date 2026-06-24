@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/tls"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/redis/go-redis/v9"
@@ -18,21 +19,22 @@ type Client struct {
 }
 
 // NewClient creates and verifies a Redis connection.
-// In production (Upstash), TLS is enabled automatically when the addr
-// contains "upstash.io" or when REDIS_TLS=true is set.
+// TLS is enabled automatically when addr contains "upstash.io"
+// or when REDIS_TLS=true is explicitly set.
 func NewClient(cfg *config.RedisConfig, log *zap.Logger) (*Client, error) {
+	useTLS := cfg.TLS || strings.Contains(cfg.Addr, "upstash.io")
+
 	opts := &redis.Options{
 		Addr:     cfg.Addr,
 		Password: cfg.Password,
 		DB:       cfg.DB,
 	}
 
-	// Enable TLS for Upstash and other managed Redis providers
-	if cfg.TLS {
+	if useTLS {
 		opts.TLSConfig = &tls.Config{
-			InsecureSkipVerify: false,
-			MinVersion:         tls.VersionTLS12,
+			MinVersion: tls.VersionTLS12,
 		}
+		log.Info("Redis TLS enabled", zap.String("addr", cfg.Addr))
 	}
 
 	rdb := redis.NewClient(opts)
