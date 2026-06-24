@@ -142,8 +142,7 @@ async function loadProfile() {
     document.getElementById('pJoined').textContent = 'Joined ' + formatDate(p.created_at);
     document.getElementById('eName').value  = p.name;
     document.getElementById('ePhone').value = p.phone_number || '';
-    document.getElementById('eImg').value   = p.profile_image_url || '';
-  } catch(e) { showToast(e.message, 'error'); }
+  } catch { /* fail silently */ }
 }
 
 async function loadAudit() {

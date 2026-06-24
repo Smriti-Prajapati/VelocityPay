@@ -124,7 +124,17 @@ async function load() {
           <div style="font-size:13px;font-weight:700;color:var(--danger)">${formatMoneyShort(s.total)}</div>
         </div>`).join('')
       : '<div style="text-align:center;padding:24px;color:var(--sub)">No data yet</div>';
-  } catch(e) { showToast(e.message, 'error'); }
+  } catch(e) {
+    // Show empty states instead of error toasts for failed data loads
+    ['monthlyChart','dailyChart','topSenders'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = '<div style="text-align:center;padding:32px;color:var(--sub)">No data yet</div>';
+    });
+    ['sTot','sComp','sFail','sAvg','pU','pW','pT','pV'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = '—';
+    });
+  }
 }
 load();
 </script>

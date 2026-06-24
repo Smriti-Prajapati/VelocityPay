@@ -182,7 +182,7 @@ async function load() {
         <div class="txn-amount ${sent?'debit':'credit'}">${sent?'-':'+'}${formatMoney(t.amount)}</div>
       </div>`;
     }).join('');
-  } catch(e) { showToast(e.message, 'error'); }
+  } catch { /* fail silently — stats show dashes, no error toast */ }
 }
 load();
 </script>
