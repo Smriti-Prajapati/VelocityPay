@@ -47,18 +47,18 @@
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
           <div class="form-group" style="margin-bottom:0">
             <label class="form-label">Password</label>
-            <div style="position:relative">
+            <div style="position:relative;overflow:hidden">
               <input type="password" id="password" placeholder="Min. 8 characters" required style="padding-right:44px;width:100%"/>
-              <button type="button" onclick="togglePassword('password',this)" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--sub);padding:4px;display:flex;align-items:center">
+              <button type="button" onclick="togglePassword('password',this)" style="position:absolute;right:0;top:0;bottom:0;width:44px;background:none;border:none;cursor:pointer;color:var(--sub);display:flex;align-items:center;justify-content:center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
               </button>
             </div>
           </div>
           <div class="form-group" style="margin-bottom:0">
             <label class="form-label">Confirm Password</label>
-            <div style="position:relative">
+            <div style="position:relative;overflow:hidden">
               <input type="password" id="confirmPwd" placeholder="Repeat password" required style="padding-right:44px;width:100%"/>
-              <button type="button" onclick="togglePassword('confirmPwd',this)" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--sub);padding:4px;display:flex;align-items:center">
+              <button type="button" onclick="togglePassword('confirmPwd',this)" style="position:absolute;right:0;top:0;bottom:0;width:44px;background:none;border:none;cursor:pointer;color:var(--sub);display:flex;align-items:center;justify-content:center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
               </button>
             </div>
