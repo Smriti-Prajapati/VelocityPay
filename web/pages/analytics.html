@@ -87,22 +87,32 @@ function bar(label, value, max, color) {
 }
 
 async function load() {
-  try {
-    const [stats, monthly, daily, platform, top] = await Promise.all([
-      Api.getUserStats(), Api.getMonthly(6), Api.getDaily(7), Api.getPlatformStats(), Api.getTopSenders(5)
-    ]);
-    document.getElementById('sTot').textContent  = stats.total_transactions;
-    document.getElementById('sComp').textContent = stats.completed_count;
-    document.getElementById('sFail').textContent = stats.failed_count;
-    document.getElementById('sAvg').textContent  = formatMoneyShort(stats.average_transaction_amount);
+  // Retry once on server wake-up
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const stats = await Api.getUserStats();
+      document.getElementById('sTot').textContent  = stats.total_transactions;
+      document.getElementById('sComp').textContent = stats.completed_count;
+      document.getElementById('sFail').textContent = stats.failed_count;
+      document.getElementById('sAvg').textContent  = formatMoneyShort(stats.average_transaction_amount);
+      break;
+    } catch {
+      if (attempt === 0) await new Promise(r => setTimeout(r, 3000));
+    }
+  }
 
+  try {
+    const monthly = await Api.getMonthly(6);
     const months = (monthly.data||[]).reverse();
     const maxM = Math.max(...months.map(m=>m.amount), 1);
     const mNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     document.getElementById('monthlyChart').innerHTML = months.length
       ? months.map(m => bar(`${mNames[m.month-1]} ${m.year}`, m.amount, maxM, 'linear-gradient(90deg,#8B5E3C,#D4A373)')).join('')
       : '<div style="text-align:center;padding:32px;color:var(--sub)">No data yet</div>';
+  } catch { document.getElementById('monthlyChart').innerHTML = '<div style="text-align:center;padding:32px;color:var(--sub)">No data yet</div>'; }
 
+  try {
+    const daily = await Api.getDaily(7);
     const days = (daily.data||[]).reverse();
     const maxD = Math.max(...days.map(d=>Math.max(d.sent,d.received)), 1);
     document.getElementById('dailyChart').innerHTML = days.length
@@ -110,12 +120,18 @@ async function load() {
           <div style="margin-bottom:10px"><div style="font-size:11px;font-weight:700;color:var(--sub);margin-bottom:6px">${d.date}</div>
           ${bar('Sent', d.sent, maxD, '#C0392B')}${bar('Received', d.received, maxD, '#2D6A4F')}</div>`).join('')
       : '<div style="text-align:center;padding:32px;color:var(--sub)">No data yet</div>';
+  } catch { document.getElementById('dailyChart').innerHTML = '<div style="text-align:center;padding:32px;color:var(--sub)">No data yet</div>'; }
 
+  try {
+    const platform = await Api.getPlatformStats();
     document.getElementById('pU').textContent = platform.total_users;
     document.getElementById('pW').textContent = platform.total_wallets;
     document.getElementById('pT').textContent = platform.total_transactions;
     document.getElementById('pV').textContent = formatMoneyShort(platform.total_volume);
+  } catch {}
 
+  try {
+    const top = await Api.getTopSenders(5);
     const senders = top.data||[];
     document.getElementById('topSenders').innerHTML = senders.length
       ? senders.map((s,i) => `<div class="txn-row" style="padding:10px 0">
@@ -124,17 +140,7 @@ async function load() {
           <div style="font-size:13px;font-weight:700;color:var(--danger)">${formatMoneyShort(s.total)}</div>
         </div>`).join('')
       : '<div style="text-align:center;padding:24px;color:var(--sub)">No data yet</div>';
-  } catch(e) {
-    // Show empty states instead of error toasts for failed data loads
-    ['monthlyChart','dailyChart','topSenders'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.innerHTML = '<div style="text-align:center;padding:32px;color:var(--sub)">No data yet</div>';
-    });
-    ['sTot','sComp','sFail','sAvg','pU','pW','pT','pV'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.textContent = '—';
-    });
-  }
+  } catch { document.getElementById('topSenders').innerHTML = '<div style="text-align:center;padding:24px;color:var(--sub)">No data yet</div>'; }
 }
 load();
 </script>
