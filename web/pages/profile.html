@@ -92,9 +92,33 @@
           <div class="card-body">
             <form id="pwdForm">
               <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
-                <div class="form-group" style="margin-bottom:0"><label class="form-label">Current Password</label><input type="password" id="curPwd" placeholder="Current"/></div>
-                <div class="form-group" style="margin-bottom:0"><label class="form-label">New Password</label><input type="password" id="newPwd" placeholder="Min. 8 chars"/></div>
-                <div class="form-group" style="margin-bottom:0"><label class="form-label">Confirm</label><input type="password" id="confPwd" placeholder="Repeat"/></div>
+                <div class="form-group" style="margin-bottom:0">
+                  <label class="form-label">Current Password</label>
+                  <div style="position:relative">
+                    <input type="password" id="curPwd" placeholder="Current" style="padding-right:40px;width:100%"/>
+                    <button type="button" onclick="togglePassword('curPwd',this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--sub);padding:4px">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </button>
+                  </div>
+                </div>
+                <div class="form-group" style="margin-bottom:0">
+                  <label class="form-label">New Password</label>
+                  <div style="position:relative">
+                    <input type="password" id="newPwd" placeholder="Min. 8 chars" style="padding-right:40px;width:100%"/>
+                    <button type="button" onclick="togglePassword('newPwd',this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--sub);padding:4px">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </button>
+                  </div>
+                </div>
+                <div class="form-group" style="margin-bottom:0">
+                  <label class="form-label">Confirm</label>
+                  <div style="position:relative">
+                    <input type="password" id="confPwd" placeholder="Repeat" style="padding-right:40px;width:100%"/>
+                    <button type="button" onclick="togglePassword('confPwd',this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--sub);padding:4px">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </button>
+                  </div>
+                </div>
               </div>
               <div class="form-error" id="pwdErr" style="margin-top:12px"></div>
               <button type="submit" class="btn-primary" id="pwdBtn" style="margin-top:16px">Update Password</button>
@@ -124,6 +148,13 @@
 <script>
 if (!Api.requireAuth()) {}
 const user = Api.getUser();
+
+function togglePassword(inputId, btn) {
+  const input = document.getElementById(inputId);
+  const isHidden = input.type === 'password';
+  input.type = isHidden ? 'text' : 'password';
+  btn.querySelector('svg').style.opacity = isHidden ? '1' : '.35';
+}
 
 async function loadProfile() {
   try {

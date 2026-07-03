@@ -562,3 +562,91 @@ textarea { resize: none; }
 /* ── Progress bar ─────────────────────────────────────────────────────────── */
 .progress-bar-wrap { background: var(--border); border-radius: 999px; height: 6px; overflow: hidden; }
 .progress-bar-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: width .8s ease; }
+
+/* ── Additional animations ────────────────────────────────────────────────── */
+
+/* Notification dot pulse */
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(1.4); opacity: .6; }
+}
+.notif-dot { animation: pulse 2s ease-in-out infinite; }
+
+/* Page fade-in on load */
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.page { animation: pageFadeIn .35s ease; }
+
+/* Stat card stagger on dashboard */
+@keyframes cardSlideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.stat-card {
+  animation: cardSlideUp .4s ease both;
+}
+.stat-card:nth-child(1) { animation-delay: .05s; }
+.stat-card:nth-child(2) { animation-delay: .12s; }
+.stat-card:nth-child(3) { animation-delay: .19s; }
+.stat-card:nth-child(4) { animation-delay: .26s; }
+
+/* Success checkmark draw */
+@keyframes checkDraw {
+  from { stroke-dashoffset: 100; }
+  to   { stroke-dashoffset: 0; }
+}
+.check-animate {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: checkDraw .5s ease .2s forwards;
+}
+
+/* Wallet card shimmer on hover */
+.wallet-card { transition: transform .25s, box-shadow .25s; }
+.wallet-card:hover { transform: translateY(-3px); box-shadow: 0 24px 60px rgba(139,94,60,.45); }
+
+/* Sidebar nav link slide */
+.nav-link { position: relative; }
+.nav-link::after {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px; background: var(--accent); border-radius: 0 3px 3px 0;
+  transform: scaleY(0); transition: transform .2s ease;
+}
+.nav-link.active::after { transform: scaleY(1); }
+
+/* Input focus ring animation */
+input:focus, select:focus, textarea:focus {
+  animation: focusRing .2s ease;
+}
+@keyframes focusRing {
+  from { box-shadow: 0 0 0 0 rgba(212,163,115,0); }
+  to   { box-shadow: 0 0 0 3px rgba(212,163,115,.18); }
+}
+
+/* Button ripple feel */
+.btn-primary:active { transform: scale(.97); }
+.btn-ghost:active   { transform: scale(.97); }
+
+/* Transaction row fade-in */
+.txn-row {
+  animation: cardSlideUp .3s ease both;
+}
+
+/* Landing section reveals */
+.how-step {
+  transition: transform .25s, box-shadow .25s;
+}
+.how-step:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(139,94,60,.14);
+}
+
+/* Feature tile hover lift */
+.feature-tile { transition: background .25s, transform .25s; }
+.feature-tile:hover { transform: translateY(-6px); }
+
+/* Testi card hover */
+.testi-card { transition: transform .25s, box-shadow .25s; }
+.testi-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(139,94,60,.12); }

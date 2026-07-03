@@ -387,15 +387,15 @@
     <div class="fraud-cards" style="width:100%;max-width:300px">
       <div class="fraud-card">
         <div class="fraud-icon" style="background:#DCFCE7;color:#16A34A"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
-        <div><div class="fraud-title">Transfer ₹500 · Approved</div><div class="fraud-sub">Risk score 20 · Normal velocity</div></div>
+        <div><div class="fraud-title">Normal transfer · Approved</div><div class="fraud-sub">Risk score low · All checks passed</div></div>
       </div>
       <div class="fraud-card">
         <div class="fraud-icon" style="background:#FEF9C3;color:#CA8A04"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg></div>
-        <div><div class="fraud-title">Transfer ₹75,000 · Flagged</div><div class="fraud-sub">Risk score 40 · Large transaction</div></div>
+        <div><div class="fraud-title">Large transfer · Under review</div><div class="fraud-sub">Risk score medium · Amount threshold</div></div>
       </div>
       <div class="fraud-card">
         <div class="fraud-icon" style="background:#FEE2E2;color:#DC2626"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div>
-        <div><div class="fraud-title">11 rapid transfers · Blocked</div><div class="fraud-sub">Risk score 85 · Velocity breach</div></div>
+        <div><div class="fraud-title">Rapid transfers · Blocked</div><div class="fraud-sub">Risk score high · Velocity breach</div></div>
       </div>
       <div class="fraud-card" style="background:var(--beige-300);border-color:var(--beige-400)">
         <div class="fraud-icon" style="background:rgba(139,94,60,.1);color:var(--brown)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
@@ -409,10 +409,10 @@
 <section class="stats-band" id="trust">
   <div class="container">
     <div class="stats-grid">
-      <div><div class="stat-num" id="s1">—</div><div class="stat-lbl">Accounts created</div></div>
-      <div><div class="stat-num" id="s2">—</div><div class="stat-lbl">Transfers processed</div></div>
-      <div><div class="stat-num">99.9%</div><div class="stat-lbl">Uptime guarantee</div></div>
-      <div><div class="stat-num" id="s3">—</div><div class="stat-lbl">Fraud events stopped</div></div>
+      <div class="reveal"><div class="stat-num" id="s1">—</div><div class="stat-lbl">Accounts created</div></div>
+      <div class="reveal reveal-delay-1"><div class="stat-num" id="s2">—</div><div class="stat-lbl">Transfers processed</div></div>
+      <div class="reveal reveal-delay-2"><div class="stat-num" id="s3">—</div><div class="stat-lbl">Total volume moved</div></div>
+      <div class="reveal reveal-delay-3"><div class="stat-num">5</div><div class="stat-lbl">Fraud rules active</div></div>
     </div>
   </div>
 </section>
@@ -423,9 +423,9 @@
     <div class="section-tag">Testimonials</div>
     <h2 class="section-h">Real users. Real money. Real trust.</h2>
     <div class="testi-grid">
-      <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"I transferred ₹50,000 to a vendor and it landed in seconds. The fraud system flagged an unusual hour transfer the next day — which I hadn't made. It was blocked automatically."</p><div class="testi-name">Rahul S.</div><div class="testi-role">Startup Founder, Bangalore</div></div>
-      <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"The analytics dashboard is the best thing about VelocityPay. I finally understand where my money goes every month without opening a spreadsheet."</p><div class="testi-name">Priya M.</div><div class="testi-role">Freelance Designer, Mumbai</div></div>
-      <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"The refund was processed atomically and the audit log showed every step. That kind of transparency is rare. It felt like I was in control the whole time."</p><div class="testi-name">Arjun K.</div><div class="testi-role">Business Owner, Hyderabad</div></div>
+      <div class="testi-card reveal"><div class="testi-stars">★★★★★</div><p class="testi-text">"Transferred funds to a vendor and it landed in seconds. The fraud engine flagged a suspicious attempt the next day — which I hadn't made. It was blocked automatically."</p><div class="testi-name">R. S.</div><div class="testi-role">Startup Founder</div></div>
+      <div class="testi-card reveal reveal-delay-1"><div class="testi-stars">★★★★★</div><p class="testi-text">"The analytics dashboard is genuinely useful. I finally understand where my money goes every month without opening a spreadsheet."</p><div class="testi-name">P. M.</div><div class="testi-role">Freelance Designer</div></div>
+      <div class="testi-card reveal reveal-delay-2"><div class="testi-stars">★★★★★</div><p class="testi-text">"The refund was processed atomically and the audit log showed every step transparently. That kind of control is rare in any payment product."</p><div class="testi-name">A. K.</div><div class="testi-role">Small Business Owner</div></div>
     </div>
   </div>
 </section>
@@ -457,24 +457,62 @@
 
 <script src="static/js/api.js"></script>
 <script>
-// Load real platform stats from the API
+// ── Scroll reveal ──────────────────────────────────────────────────────────
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ── Load real platform stats ───────────────────────────────────────────────
 async function loadStats() {
   try {
-    // Need a token to hit analytics — skip if not logged in, show dashes
-    if (!Api.getToken()) return;
-    const stats = await fetch('/api/v1/analytics/platform', {
-      headers: { 'Authorization': 'Bearer ' + Api.getToken() }
-    }).then(r => r.json());
-    if (stats.success && stats.data) {
-      const d = stats.data;
+    const token = Api.getToken();
+    if (!token) return;
+    const res = await fetch('/api/v1/analytics/platform', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    const json = await res.json();
+    if (json.success && json.data) {
+      const d = json.data;
       const s1 = document.getElementById('s1');
       const s2 = document.getElementById('s2');
-      if (s1) s1.textContent = d.total_users?.toLocaleString('en-IN') || '—';
-      if (s2) s2.textContent = d.total_transactions?.toLocaleString('en-IN') || '—';
+      const s3 = document.getElementById('s3');
+      if (s1 && d.total_users)        animateNum(s1, d.total_users);
+      if (s2 && d.total_transactions) animateNum(s2, d.total_transactions);
+      if (s3 && d.total_volume)       s3.textContent = '₹' + formatK(d.total_volume);
     }
-  } catch { /* fail silently on landing page */ }
+  } catch { /* fail silently */ }
 }
-loadStats();
+
+function animateNum(el, target) {
+  const dur = 1800, start = Date.now();
+  const tick = () => {
+    const p = Math.min((Date.now()-start)/dur, 1);
+    const e = 1 - Math.pow(1-p, 3);
+    el.textContent = Math.floor(e * target).toLocaleString('en-IN');
+    if (p < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+
+function formatK(n) {
+  if (n >= 10000000) return (n/10000000).toFixed(1) + 'Cr';
+  if (n >= 100000)   return (n/100000).toFixed(1) + 'L';
+  if (n >= 1000)     return (n/1000).toFixed(1) + 'K';
+  return n.toFixed(0);
+}
+
+// Stats counter triggers on scroll into view
+const statsObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { loadStats(); statsObserver.disconnect(); } });
+}, { threshold: 0.3 });
+const statsBand = document.querySelector('.stats-band');
+if (statsBand) statsObserver.observe(statsBand);
 </script>
 </body>
 </html>
