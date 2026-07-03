@@ -405,18 +405,6 @@
   </div>
 </section>
 
-<!-- STATS BAND — brown -->
-<section class="stats-band" id="trust">
-  <div class="container">
-    <div class="stats-grid">
-      <div class="reveal"><div class="stat-num" id="s1">—</div><div class="stat-lbl">Accounts created</div></div>
-      <div class="reveal reveal-delay-1"><div class="stat-num" id="s2">—</div><div class="stat-lbl">Transfers processed</div></div>
-      <div class="reveal reveal-delay-2"><div class="stat-num" id="s3">—</div><div class="stat-lbl">Total volume moved</div></div>
-      <div class="reveal reveal-delay-3"><div class="stat-num">5</div><div class="stat-lbl">Fraud rules active</div></div>
-    </div>
-  </div>
-</section>
-
 <!-- CTA BAND -->
 <section class="cta-band">
   <div class="container">
@@ -444,7 +432,7 @@
 
 <script src="static/js/api.js"></script>
 <script>
-// ── Scroll reveal ──────────────────────────────────────────────────────────
+// Scroll reveal
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) {
@@ -454,52 +442,6 @@ const revealObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-// ── Load real platform stats ───────────────────────────────────────────────
-async function loadStats() {
-  try {
-    const token = Api.getToken();
-    if (!token) return;
-    const res = await fetch('/api/v1/analytics/platform', {
-      headers: { 'Authorization': 'Bearer ' + token }
-    });
-    const json = await res.json();
-    if (json.success && json.data) {
-      const d = json.data;
-      const s1 = document.getElementById('s1');
-      const s2 = document.getElementById('s2');
-      const s3 = document.getElementById('s3');
-      if (s1 && d.total_users)        animateNum(s1, d.total_users);
-      if (s2 && d.total_transactions) animateNum(s2, d.total_transactions);
-      if (s3 && d.total_volume)       s3.textContent = '₹' + formatK(d.total_volume);
-    }
-  } catch { /* fail silently */ }
-}
-
-function animateNum(el, target) {
-  const dur = 1800, start = Date.now();
-  const tick = () => {
-    const p = Math.min((Date.now()-start)/dur, 1);
-    const e = 1 - Math.pow(1-p, 3);
-    el.textContent = Math.floor(e * target).toLocaleString('en-IN');
-    if (p < 1) requestAnimationFrame(tick);
-  };
-  requestAnimationFrame(tick);
-}
-
-function formatK(n) {
-  if (n >= 10000000) return (n/10000000).toFixed(1) + 'Cr';
-  if (n >= 100000)   return (n/100000).toFixed(1) + 'L';
-  if (n >= 1000)     return (n/1000).toFixed(1) + 'K';
-  return n.toFixed(0);
-}
-
-// Stats counter triggers on scroll into view
-const statsObserver = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) { loadStats(); statsObserver.disconnect(); } });
-}, { threshold: 0.3 });
-const statsBand = document.querySelector('.stats-band');
-if (statsBand) statsObserver.observe(statsBand);
 </script>
 </body>
 </html>
