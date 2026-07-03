@@ -31,13 +31,13 @@ func NewRepository(db *sqlx.DB) Repository {
 func (r *postgresRepository) GetUserStats(ctx context.Context, userID uuid.UUID) (*TransactionStats, error) {
 	query := `
 		SELECT
-			COUNT(*)                                                       AS total_transactions,
-			COUNT(*) FILTER (WHERE status = 'completed')                  AS completed_count,
-			COUNT(*) FILTER (WHERE status = 'failed')                     AS failed_count,
-			COALESCE(SUM(amount) FILTER (WHERE sender_id = $1 AND status = 'completed'), 0)   AS total_amount_sent,
-			COALESCE(SUM(amount) FILTER (WHERE receiver_id = $1 AND status = 'completed'), 0) AS total_amount_received,
-			COALESCE(AVG(amount) FILTER (WHERE status = 'completed'), 0)  AS avg_amount,
-			COALESCE(MAX(amount) FILTER (WHERE status = 'completed'), 0)  AS largest_transaction
+			COUNT(*)                                                                           AS total_transactions,
+			COUNT(CASE WHEN status = 'completed' THEN 1 END)                                  AS completed_count,
+			COUNT(CASE WHEN status = 'failed' THEN 1 END)                                     AS failed_count,
+			COALESCE(SUM(CASE WHEN sender_id = $1 AND status = 'completed' THEN amount END), 0)   AS total_amount_sent,
+			COALESCE(SUM(CASE WHEN receiver_id = $1 AND status = 'completed' THEN amount END), 0) AS total_amount_received,
+			COALESCE(AVG(CASE WHEN status = 'completed' THEN amount END), 0)                  AS avg_amount,
+			COALESCE(MAX(CASE WHEN status = 'completed' THEN amount END), 0)                  AS largest_transaction
 		FROM transactions
 		WHERE sender_id = $1 OR receiver_id = $1
 	`
@@ -82,9 +82,9 @@ func (r *postgresRepository) GetMonthlySpend(ctx context.Context, userID uuid.UU
 func (r *postgresRepository) GetDailyVolume(ctx context.Context, userID uuid.UUID, days int) ([]*DailyVolume, error) {
 	query := `
 		SELECT
-			TO_CHAR(created_at, 'YYYY-MM-DD')                                     AS date,
-			COALESCE(SUM(amount) FILTER (WHERE sender_id = $1), 0)                AS sent,
-			COALESCE(SUM(amount) FILTER (WHERE receiver_id = $1), 0)              AS received
+			TO_CHAR(created_at, 'YYYY-MM-DD')                                       AS date,
+			COALESCE(SUM(CASE WHEN sender_id = $1 THEN amount ELSE 0 END), 0)       AS sent,
+			COALESCE(SUM(CASE WHEN receiver_id = $1 THEN amount ELSE 0 END), 0)     AS received
 		FROM transactions
 		WHERE (sender_id = $1 OR receiver_id = $1)
 		  AND status = 'completed'
