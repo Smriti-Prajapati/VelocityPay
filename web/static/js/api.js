@@ -141,3 +141,13 @@ const Api = (() => {
     getMyFraudAlerts,
   };
 })();
+
+// ── Keep-alive ping ────────────────────────────────────────────────────────
+// Pings /health every 4 minutes while the user is on the page.
+// Prevents the free Render instance from spinning down mid-session.
+(function keepAlive() {
+  if (window.location.hostname === 'localhost') return;
+  setInterval(() => {
+    fetch('/health').catch(() => {});
+  }, 4 * 60 * 1000); // every 4 minutes
+})();

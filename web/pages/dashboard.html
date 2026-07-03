@@ -143,16 +143,21 @@ document.getElementById('greeting').textContent = h < 12 ? 'morning' : h < 17 ? 
 document.getElementById('userName').textContent = user?.name?.split(' ')[0] || '';
 
 async function load() {
-  // Call each API independently — one failure doesn't block the others
-  try {
-    const summary = await Api.getDashboard();
-    document.getElementById('sBalance').textContent  = formatMoneyShort(summary.wallet_balance);
-    document.getElementById('sSent').textContent     = formatMoneyShort(summary.total_sent);
-    document.getElementById('sReceived').textContent = formatMoneyShort(summary.total_received);
-    document.getElementById('sTxns').textContent     = summary.total_transactions;
-    document.getElementById('wBalance').textContent  = formatMoney(summary.wallet_balance, summary.currency || 'INR');
-    document.getElementById('wCurrency').textContent = summary.currency || 'INR';
-  } catch { /* show dashes */ }
+  // Retry once in case the server just woke up
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const summary = await Api.getDashboard();
+      document.getElementById('sBalance').textContent  = formatMoneyShort(summary.wallet_balance);
+      document.getElementById('sSent').textContent     = formatMoneyShort(summary.total_sent);
+      document.getElementById('sReceived').textContent = formatMoneyShort(summary.total_received);
+      document.getElementById('sTxns').textContent     = summary.total_transactions;
+      document.getElementById('wBalance').textContent  = formatMoney(summary.wallet_balance, summary.currency || 'INR');
+      document.getElementById('wCurrency').textContent = summary.currency || 'INR';
+      break; // success — stop retrying
+    } catch {
+      if (attempt === 0) await new Promise(r => setTimeout(r, 3000)); // wait 3s then retry
+    }
+  }
 
   try {
     const w = await Api.getBalance();
