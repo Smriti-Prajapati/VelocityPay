@@ -67,17 +67,17 @@
         </div>
 
         <!-- No wallet state -->
-        <div class="card" id="noWalletCard" style="text-align:center;padding:48px 32px">
+        <div class="card no-wallet-card" id="noWalletCard">
           <div class="no-wallet-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><circle cx="12" cy="14" r="2"/></svg></div>
-          <div style="font-size:17px;font-weight:700;margin-bottom:8px">No wallet yet</div>
-          <p style="font-size:14px;color:var(--sub);margin-bottom:24px">Create your wallet to start sending and receiving money.</p>
-          <select id="createCurrency" style="max-width:200px;margin:0 auto 20px;display:block">
+          <div class="no-wallet-title">No wallet yet</div>
+          <p class="no-wallet-desc">Create your wallet to start sending and receiving money.</p>
+          <select id="createCurrency" class="no-wallet-select">
             <option value="INR">INR — Indian Rupee</option>
             <option value="USD">USD — US Dollar</option>
             <option value="EUR">EUR — Euro</option>
             <option value="GBP">GBP — British Pound</option>
           </select>
-          <button class="btn-primary" id="createBtn" onclick="createWallet()" style="margin:0 auto">Create Wallet</button>
+          <button class="btn-primary btn-centered" id="createBtn" onclick="createWallet()">Create Wallet</button>
         </div>
       </div>
 
