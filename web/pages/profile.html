@@ -10,7 +10,7 @@
 <div class="app-root">
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-brand">Velocity<em>Pay</em></div>
-  <nav style="padding:12px 0">
+  <nav class="sidebar-nav">
     <a class="nav-link" href="dashboard.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</a>
     <a class="nav-link" href="wallet.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><circle cx="12" cy="14" r="2"/></svg>Wallet</a>
     <a class="nav-link" href="send.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Send Money</a>
@@ -19,66 +19,66 @@
     <a class="nav-link" href="analytics.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>Analytics</a>
     <a class="nav-link active" href="profile.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</a>
   </nav>
-  <div class="sidebar-footer"><div class="sidebar-user"><div class="sidebar-avatar" data-user-avatar></div><div><div class="sidebar-user-name" data-user-name></div><div class="sidebar-user-email" data-user-email></div></div></div><a href="#" onclick="Api.logout()" style="display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.3);font-size:13px;margin-top:14px;text-decoration:none"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sign out</a></div>
+  <div class="sidebar-footer"><div class="sidebar-user"><div class="sidebar-avatar" data-user-avatar></div><div><div class="sidebar-user-name" data-user-name></div><div class="sidebar-user-email" data-user-email></div></div></div><a href="#" onclick="Api.logout()" class="sidebar-signout"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sign out</a></div>
 </aside>
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 <div class="main">
   <header class="topbar">
-    <div style="display:flex;align-items:center;gap:12px"><button class="hamburger" id="hamburger"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button><span class="topbar-title">Profile</span></div>
+    <div class="topbar-left"><button class="hamburger" id="hamburger"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button><span class="topbar-title">Profile</span></div>
     <div class="topbar-right"><div class="top-avatar" data-user-avatar></div></div>
   </header>
   <main class="page">
-    <div style="display:grid;grid-template-columns:300px 1fr;gap:28px">
+    <div class="profile-page-grid">
 
       <!-- Profile card -->
-      <div style="display:flex;flex-direction:column;gap:20px">
-        <div class="card" style="text-align:center;padding:32px 24px">
+      <div class="profile-card-col">
+        <div class="card profile-card-centered">
           <!-- Clickable avatar with device upload -->
-          <div style="position:relative;width:80px;height:80px;margin:0 auto 8px;cursor:pointer" onclick="document.getElementById('avatarInput').click()" title="Click to change photo"
+          <div class="profile-avatar-wrap" onclick="document.getElementById('avatarInput').click()" title="Click to change photo"
                onmouseenter="document.getElementById('avatarOverlay').style.opacity='1'"
                onmouseleave="document.getElementById('avatarOverlay').style.opacity='0'">
-            <div id="pAvatar" style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:#fff;overflow:hidden;position:relative;z-index:1"></div>
-            <div id="avatarOverlay" style="position:absolute;inset:0;border-radius:50%;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;z-index:2">
+            <div id="pAvatar" class="profile-avatar-circle"></div>
+            <div id="avatarOverlay" class="profile-avatar-overlay">
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
             </div>
             <input type="file" id="avatarInput" accept="image/jpeg,image/jpg,image/png,image/webp" style="display:none" onchange="handleAvatarUpload(event)"/>
           </div>
-          <div style="font-size:11px;color:var(--sub);margin-bottom:14px">Click to change photo</div>
-          <div style="font-size:19px;font-weight:800;color:var(--text)" id="pName">—</div>
-          <div style="font-size:14px;color:var(--sub);margin-top:4px" id="pEmail">—</div>
-          <div style="margin:18px 0;border-top:1px solid var(--border)"></div>
-          <div style="display:flex;flex-direction:column;gap:10px;text-align:left">
-            <div style="display:flex;align-items:center;gap:10px;font-size:13px"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.61 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span id="pPhone">—</span></div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:13px"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span id="pJoined">—</span></div>
+          <div class="profile-avatar-hint">Click to change photo</div>
+          <div class="profile-name" id="pName">—</div>
+          <div class="profile-email" id="pEmail">—</div>
+          <div class="profile-divider"></div>
+          <div class="profile-info-list">
+            <div class="profile-info-row"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.61 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span id="pPhone">—</span></div>
+            <div class="profile-info-row"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span id="pJoined">—</span></div>
           </div>
-          <div style="margin:18px 0;border-top:1px solid var(--border)"></div>
+          <div class="profile-divider"></div>
           <span class="badge badge-completed">Account Active</span>
         </div>
       </div>
 
       <!-- Forms + activity -->
-      <div style="display:flex;flex-direction:column;gap:24px">
+      <div class="profile-forms-col">
 
         <!-- Edit profile -->
         <div class="card">
           <div class="card-header">Edit Profile</div>
           <div class="card-body">
             <form id="editForm">
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-                <div class="form-group" style="margin-bottom:0"><label class="form-label">Full Name</label><input type="text" id="eName" placeholder="Full name"/></div>
-                <div class="form-group" style="margin-bottom:0"><label class="form-label">Phone Number</label><input type="tel" id="ePhone" placeholder="+919876543210"/></div>
+              <div class="edit-form-grid">
+                <div class="form-group edit-form-group-inline"><label class="form-label">Full Name</label><input type="text" id="eName" placeholder="Full name"/></div>
+                <div class="form-group edit-form-group-inline"><label class="form-label">Phone Number</label><input type="tel" id="ePhone" placeholder="+919876543210"/></div>
               </div>
               <div class="form-group" style="margin-top:16px">
-                <label class="form-label">Profile Photo <span style="color:var(--sub);font-weight:400">(optional — click avatar above to upload)</span></label>
-                <div id="uploadPreviewBox" style="display:none;align-items:center;gap:12px;padding:12px;background:var(--bg);border-radius:10px;border:1px solid var(--border)">
-                  <img id="uploadPreview" src="" alt="preview" style="width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid var(--border)"/>
-                  <div style="flex:1">
-                    <div id="uploadFileName" style="font-size:13px;font-weight:600;color:var(--text)"></div>
-                    <div id="uploadFileSize" style="font-size:12px;color:var(--sub);margin-top:2px"></div>
+                <label class="form-label">Profile Photo <span class="optional-label">(optional — click avatar above to upload)</span></label>
+                <div id="uploadPreviewBox" class="upload-preview-box">
+                  <img id="uploadPreview" src="" alt="preview" class="upload-preview-img"/>
+                  <div class="upload-file-info">
+                    <div id="uploadFileName" class="upload-file-name"></div>
+                    <div id="uploadFileSize" class="upload-file-size"></div>
                   </div>
-                  <button type="button" onclick="clearAvatarUpload()" style="background:none;border:none;cursor:pointer;color:var(--sub);font-size:18px;line-height:1">×</button>
+                  <button type="button" onclick="clearAvatarUpload()" class="upload-clear-btn">×</button>
                 </div>
-                <div id="uploadErrorMsg" style="font-size:12px;color:var(--danger);margin-top:6px;display:none"></div>
+                <div id="uploadErrorMsg" class="upload-error-msg"></div>
               </div>
               <div class="form-error" id="editErr"></div>
               <button type="submit" class="btn-primary" id="editBtn" style="margin-top:4px">Save Changes</button>
@@ -91,30 +91,30 @@
           <div class="card-header">Change Password</div>
           <div class="card-body">
             <form id="pwdForm">
-              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
-                <div class="form-group" style="margin-bottom:0">
+              <div class="password-form-grid">
+                <div class="form-group edit-form-group-inline">
                   <label class="form-label">Current Password</label>
-                  <div style="position:relative">
-                    <input type="password" id="curPwd" placeholder="Current" style="padding-right:40px;width:100%"/>
-                    <button type="button" onclick="togglePassword('curPwd',this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--sub);padding:4px">
+                  <div class="password-field-wrap">
+                    <input type="password" id="curPwd" placeholder="Current"/>
+                    <button type="button" onclick="togglePassword('curPwd',this)" class="password-toggle-btn">
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                     </button>
                   </div>
                 </div>
-                <div class="form-group" style="margin-bottom:0">
+                <div class="form-group edit-form-group-inline">
                   <label class="form-label">New Password</label>
-                  <div style="position:relative">
-                    <input type="password" id="newPwd" placeholder="Min. 8 chars" style="padding-right:40px;width:100%"/>
-                    <button type="button" onclick="togglePassword('newPwd',this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--sub);padding:4px">
+                  <div class="password-field-wrap">
+                    <input type="password" id="newPwd" placeholder="Min. 8 chars"/>
+                    <button type="button" onclick="togglePassword('newPwd',this)" class="password-toggle-btn">
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                     </button>
                   </div>
                 </div>
-                <div class="form-group" style="margin-bottom:0">
+                <div class="form-group edit-form-group-inline">
                   <label class="form-label">Confirm</label>
-                  <div style="position:relative">
-                    <input type="password" id="confPwd" placeholder="Repeat" style="padding-right:40px;width:100%"/>
-                    <button type="button" onclick="togglePassword('confPwd',this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--sub);padding:4px">
+                  <div class="password-field-wrap">
+                    <input type="password" id="confPwd" placeholder="Repeat"/>
+                    <button type="button" onclick="togglePassword('confPwd',this)" class="password-toggle-btn">
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                     </button>
                   </div>

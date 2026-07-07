@@ -294,25 +294,25 @@
       <div class="mock-screen">
         <div class="mock-header">VelocityPay</div>
         <div class="mock-body">
-          <div style="font-size:11px;font-weight:700;color:#9C876A;letter-spacing:.5px;margin-bottom:10px">RECENT ACTIVITY</div>
+          <div class="mock-activity-label">RECENT ACTIVITY</div>
           <div class="mock-row">
-            <div class="mock-dot" style="background:rgba(192,57,43,.1);color:#C0392B">↑</div>
+            <div class="mock-dot mock-dot-sent">↑</div>
             <div class="mock-row-name">Money sent</div>
-            <div class="mock-row-amt" style="color:#C0392B">Instant</div>
+            <div class="mock-row-amt mock-row-amt-sent">Instant</div>
           </div>
           <div class="mock-row">
-            <div class="mock-dot" style="background:rgba(45,106,79,.1);color:#2D6A4F">↓</div>
+            <div class="mock-dot mock-dot-received">↓</div>
             <div class="mock-row-name">Money received</div>
-            <div class="mock-row-amt" style="color:#2D6A4F">Verified</div>
+            <div class="mock-row-amt mock-row-amt-received">Verified</div>
           </div>
           <div class="mock-row">
-            <div class="mock-dot" style="background:rgba(139,94,60,.1);color:#8B5E3C">+</div>
+            <div class="mock-dot mock-dot-topup">+</div>
             <div class="mock-row-name">Wallet top-up</div>
-            <div class="mock-row-amt" style="color:#8B5E3C">Secure</div>
+            <div class="mock-row-amt mock-row-amt-topup">Secure</div>
           </div>
-          <div style="margin-top:16px;background:linear-gradient(135deg,#5C3A1E,#8B5E3C);border-radius:12px;padding:14px;color:#fff">
-            <div style="font-size:11px;opacity:.5;margin-bottom:4px">YOUR BALANCE</div>
-            <div style="font-size:18px;font-weight:700;letter-spacing:-0.5px">Always in sync</div>
+          <div class="mock-balance-card">
+            <div class="mock-balance-card-label">YOUR BALANCE</div>
+            <div class="mock-balance-card-value">Always in sync</div>
           </div>
         </div>
       </div>
@@ -334,15 +334,15 @@
     <p class="section-p light">One wallet. Every rupee accounted for. VelocityPay shows you total sent, received, and your live balance — always in sync.</p>
     <a href="pages/register.html"><span class="btn-pill-outline btn-pill-outline-w">Create your wallet</span></a>
   </div>
-  <div class="split-vis" style="background:var(--brown)">
+  <div class="split-vis wallet-vis-bg">
     <div class="wallet-card-ui">
       <div class="wc-label">VELOCITYPAY WALLET</div>
       <div class="wc-amount">Your Balance</div>
       <div class="wc-sub">INR · Unique wallet number</div>
-      <div style="background:linear-gradient(90deg,rgba(255,255,255,.3),transparent);height:1px;margin:12px 0 16px"></div>
+      <div class="wc-divider"></div>
       <div class="wc-stat">
-        <div class="wc-stat-item"><label>TOTAL SENT</label><span style="color:#FCA5A5">Real-time</span></div>
-        <div class="wc-stat-item"><label>RECEIVED</label><span style="color:#6EE7B7">Real-time</span></div>
+        <div class="wc-stat-item"><label>TOTAL SENT</label><span class="wc-stat-sent">Real-time</span></div>
+        <div class="wc-stat-item"><label>RECEIVED</label><span class="wc-stat-received">Real-time</span></div>
         <div class="wc-stat-item"><label>STATUS</label><span>Active</span></div>
       </div>
     </div>
@@ -355,27 +355,27 @@
     <div class="section-tag">Security</div>
     <h2 class="section-h">Fraud doesn't<br/>stand a chance.</h2>
     <p class="section-p">Five real-time fraud rules evaluate every transfer before a single rupee moves. High-risk transactions are blocked — not just flagged.</p>
-    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px">
-      <div style="display:flex;align-items:center;gap:10px;font-size:14px;font-weight:500;color:var(--ink)">
-        <div style="width:20px;height:20px;border-radius:50%;background:rgba(45,106,79,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+    <div class="split-text-security">
+      <div class="security-check-item">
+        <div class="security-check-icon">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#2D6A4F" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
         Velocity — blocks >10 transfers in 30s
       </div>
-      <div style="display:flex;align-items:center;gap:10px;font-size:14px;font-weight:500;color:var(--ink)">
-        <div style="width:20px;height:20px;border-radius:50%;background:rgba(45,106,79,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+      <div class="security-check-item">
+        <div class="security-check-icon">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#2D6A4F" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
         Large transaction threshold alert
       </div>
-      <div style="display:flex;align-items:center;gap:10px;font-size:14px;font-weight:500;color:var(--ink)">
-        <div style="width:20px;height:20px;border-radius:50%;background:rgba(45,106,79,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+      <div class="security-check-item">
+        <div class="security-check-icon">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#2D6A4F" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
         Rapid balance depletion detection
       </div>
-      <div style="display:flex;align-items:center;gap:10px;font-size:14px;font-weight:500;color:var(--ink)">
-        <div style="width:20px;height:20px;border-radius:50%;background:rgba(45,106,79,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+      <div class="security-check-item">
+        <div class="security-check-icon">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#2D6A4F" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
         Unusual hour + new account signals
@@ -397,7 +397,7 @@
         <div class="fraud-icon" style="background:#FEE2E2;color:#DC2626"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div>
         <div><div class="fraud-title">Rapid transfers · Blocked</div><div class="fraud-sub">Risk score high · Velocity breach</div></div>
       </div>
-      <div class="fraud-card" style="background:var(--beige-300);border-color:var(--beige-400)">
+      <div class="fraud-card fraud-card-muted">
         <div class="fraud-icon" style="background:rgba(139,94,60,.1);color:var(--brown)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
         <div><div class="fraud-title">Full audit trail</div><div class="fraud-sub">IP · user agent · entity · timestamp</div></div>
       </div>

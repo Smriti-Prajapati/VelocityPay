@@ -10,7 +10,7 @@
 <div class="app-root">
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-brand">Velocity<em>Pay</em></div>
-  <nav style="padding:12px 0">
+  <nav class="sidebar-nav">
     <a class="nav-link" href="dashboard.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</a>
     <a class="nav-link" href="wallet.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><circle cx="12" cy="14" r="2"/></svg>Wallet</a>
     <a class="nav-link" href="send.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Send Money</a>
@@ -19,21 +19,21 @@
     <a class="nav-link" href="analytics.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>Analytics</a>
     <a class="nav-link" href="profile.html"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</a>
   </nav>
-  <div class="sidebar-footer"><div class="sidebar-user"><div class="sidebar-avatar" data-user-avatar></div><div><div class="sidebar-user-name" data-user-name></div></div></div><a href="#" onclick="Api.logout()" style="display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.3);font-size:13px;margin-top:14px;text-decoration:none"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sign out</a></div>
+  <div class="sidebar-footer"><div class="sidebar-user"><div class="sidebar-avatar" data-user-avatar></div><div><div class="sidebar-user-name" data-user-name></div></div></div><a href="#" onclick="Api.logout()" class="sidebar-signout"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sign out</a></div>
 </aside>
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
 <div class="main">
   <header class="topbar">
-    <div style="display:flex;align-items:center;gap:12px"><button class="hamburger" id="hamburger"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button><span class="topbar-title">Transactions</span></div>
+    <div class="topbar-left"><button class="hamburger" id="hamburger"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button><span class="topbar-title">Transactions</span></div>
     <div class="topbar-right"><div class="top-avatar" data-user-avatar onclick="location.href='profile.html'"></div></div>
   </header>
   <main class="page">
     <!-- Filters -->
     <div class="card" style="margin-bottom:20px">
       <div class="card-body" style="padding-top:18px;padding-bottom:18px">
-        <div style="display:flex;gap:14px;align-items:flex-end;flex-wrap:wrap">
-          <div style="flex:1;min-width:140px">
+        <div class="filter-bar">
+          <div class="filter-field">
             <label class="form-label">Status</label>
             <select id="fStatus">
               <option value="">All statuses</option>
@@ -43,7 +43,7 @@
               <option value="reversed">Reversed</option>
             </select>
           </div>
-          <div style="flex:1;min-width:140px">
+          <div class="filter-field">
             <label class="form-label">Type</label>
             <select id="fType">
               <option value="">All types</option>
@@ -79,9 +79,9 @@
     <div class="form-group"><label class="form-label">Refund Amount</label><input type="number" id="rAmount" placeholder="Amount"/></div>
     <div class="form-group"><label class="form-label">Reason</label><textarea id="rReason" rows="3" placeholder="Why are you requesting this refund?"></textarea></div>
     <div class="form-error" id="rErr"></div>
-    <div style="display:flex;gap:12px;margin-top:4px">
-      <button class="btn-ghost" style="flex:1" onclick="document.getElementById('refundModal').classList.remove('open')">Cancel</button>
-      <button class="btn-primary" style="flex:1" id="rSubmitBtn" onclick="submitRefund()">Submit Refund</button>
+    <div class="refund-modal-actions">
+      <button class="btn-ghost" onclick="document.getElementById('refundModal').classList.remove('open')">Cancel</button>
+      <button class="btn-primary" id="rSubmitBtn" onclick="submitRefund()">Submit Refund</button>
     </div>
   </div>
 </div>
@@ -112,17 +112,17 @@ async function loadTxns(page=1) {
       const sent = t.sender_id === user?.id;
       const canRefund = sent && t.status === 'completed';
       return `<tr>
-        <td><div style="display:flex;align-items:center;gap:10px">
+        <td><div class="txn-direction-cell">
           <div class="txn-icon-wrap ${sent?'sent':'received'}" style="width:34px;height:34px">
             ${sent?'<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>':'<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="17" y1="7" x2="7" y2="17"/><polyline points="17 17 7 17 7 7"/></svg>'}
           </div>
-          <span style="font-weight:600;font-size:14px">${sent?'Sent':'Received'}</span>
+          <span class="txn-direction-label">${sent?'Sent':'Received'}</span>
         </div></td>
-        <td><span style="font-weight:700;color:${sent?'var(--danger)':'var(--success)'}">${sent?'-':'+'}${formatMoney(t.amount)}</span></td>
+        <td><span class="txn-amount-cell ${sent?'debit':'credit'}">${sent?'-':'+'}${formatMoney(t.amount)}</span></td>
         <td>${statusBadge(t.status)}</td>
-        <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--sub);font-size:13px">${t.notes||'—'}</td>
-        <td style="font-size:13px;color:var(--sub)">${formatDate(t.created_at)}</td>
-        <td>${canRefund?`<button onclick="openRefund('${t.id}',${t.amount})" style="background:transparent;border:1.5px solid var(--border);border-radius:8px;padding:5px 12px;font-size:12px;font-weight:600;cursor:pointer;color:var(--primary);white-space:nowrap">Refund</button>`:''}</td>
+        <td class="txn-notes-cell">${t.notes||'—'}</td>
+        <td class="txn-date-cell">${formatDate(t.created_at)}</td>
+        <td>${canRefund?`<button onclick="openRefund('${t.id}',${t.amount})" class="refund-btn">Refund</button>`:''}</td>
       </tr>`;
     }).join('');
     renderPagination('pagination', page, d.total_pages||1, 'loadTxns');
