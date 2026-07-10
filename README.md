@@ -10,6 +10,14 @@ Live demo → [smartspend-qrul.onrender.com](https://smartspend-qrul.onrender.co
 
 I wanted to understand what happens when two people send money at the exact same time. How does a bank guarantee that ₹500 isn't deducted twice? How does fraud detection work without blocking real users? Building this forced me to answer those questions with actual code.
 
+<img width="1919" height="1010" alt="image" src="https://github.com/user-attachments/assets/4150d40a-fd32-4786-ad09-686f8f74b312" />
+
+<img width="1919" height="1011" alt="image" src="https://github.com/user-attachments/assets/455d0f32-eb9a-4368-9b0c-b46f394b514c" />
+
+<img width="1914" height="1012" alt="image" src="https://github.com/user-attachments/assets/e8e3c19c-2eee-456b-85be-0be5771d8b87" />
+
+<img width="1919" height="1009" alt="image" src="https://github.com/user-attachments/assets/efa85ad8-8c23-4cf8-90e1-f1fa9fe21c7d" />
+
 ---
 
 ## Stack
