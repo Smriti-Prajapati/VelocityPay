@@ -1,4 +1,4 @@
-# VelocityPay
+# VelocityPay - Distributed Digital Wallet & Payment Platform
 
 A digital wallet backend I built in Go to understand how payment systems actually work under the hood — not just CRUD, but real concurrency, atomicity, and event-driven design.
 
